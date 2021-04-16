@@ -1,16 +1,21 @@
 // Beiboot Server
 
+// fs Varuabels
 const dir = './data/';
-// const fs = require('fs').promises;
+const fs = require('fs');
 
+// get directory tree
 const dirTree = require("directory-tree");
 const tree = dirTree(dir);
 
+// init express with cors
 const express = require('express');
+const cors = require('cors');
 const app = express();
+app.use(cors());
 
 
-console.log(tree.children)
+// Start logic
 
 // // "ls" any content in Folder
 // async function readDir(path) {
@@ -22,13 +27,14 @@ console.log(tree.children)
 //     }
 // }
 
-
-
 app.get('/', function (req, res) {
-
+    console.log('call: /')
     res.send(tree.children);
 
 
 });
 
-app.listen(3000);
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+    console.log(`listening on ${port}`);
+});
