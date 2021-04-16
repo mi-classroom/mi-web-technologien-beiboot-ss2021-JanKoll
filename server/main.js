@@ -15,6 +15,8 @@ const app = express();
 app.use(cors());
 
 
+console.log(tree.children);
+
 // Start logic
 
 // // "ls" any content in Folder
@@ -28,10 +30,27 @@ app.use(cors());
 // }
 
 app.get('/', function (req, res) {
-    console.log('call: /')
     res.send(tree.children);
+});
 
+app.get('/data/:name/:category/:file', function (req, res) {
+    let options = {
+        root: dir,
+        dotfiles: 'deny',
+        headers: {
+            'x-timestamp': Date.now(),
+            'x-sent': true
+        }
+    }
 
+    let fileName = req.params.name + '/' + req.params.category + '/' + req.params.file
+    res.sendFile(fileName, options, function (err) {
+        if (err) {
+            next(err)
+        } else {
+            console.log('Sent:', fileName)
+        }
+    })
 });
 
 const port = process.env.PORT || 3000;
