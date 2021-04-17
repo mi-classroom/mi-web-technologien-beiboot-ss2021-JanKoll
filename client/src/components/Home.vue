@@ -114,6 +114,10 @@ $emerald: #2ecc71;
         &:not(:last-child) {
           border-right: .125rem solid $asphalt;
         }
+        &:last-child .image-view-nav-child {
+          border-right: none;
+          right: 0;
+        }
         &:hover .image-view-nav-child {
           display: block;
         }

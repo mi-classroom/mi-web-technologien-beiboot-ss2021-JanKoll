@@ -2,7 +2,7 @@
 
 // fs Varuabels
 const dir = './data/';
-const fs = require('fs');
+const fs = require('fs').promises;
 
 // get directory tree
 const dirTree = require("directory-tree");
@@ -14,23 +14,39 @@ const cors = require('cors');
 const app = express();
 app.use(cors());
 
+// ExifReader
+const ExifReader = require('exifreader');
+const exifErrors = ExifReader.errors;
 
-console.log(tree.children);
 
-// Start logic
+const filePath = 'data/G_US_HAM_46-1987/01_Overall/G_US_HAM_46-1987_Overall-001.tif.jpg';
 
-// // "ls" any content in Folder
-// async function readDir(path) {
-//     try {
-//         return await fs.readdir(path);
-//     } catch (err) {
-//         console.log(err);
-//         return err;
-//     }
-// }
+
+
+function addMetaToTree(tree) {
+    async function loadMonoCounter(file) {
+        const data = await fs.readFile(file);
+        return new Buffer.from(data);
+    }
+
+    tree.forEach(dirItem => {
+        dirItem.children.forEach(dirParent => {
+            dirParent.children.forEach(dirChild => {
+                loadMonoCounter(dirChild.path).then(data => {
+                    dirChild.meta = ExifReader.load(data, {expanded: true})
+                })
+            })
+        })
+    })
+
+    return tree;
+}
+
+addMetaToTree(tree.children)
+
 
 app.get('/', function (req, res) {
-    res.send(tree.children);
+    res.send(addMetaToTree(tree.children));
 });
 
 app.get('/data/:name/:category/:file', function (req, res) {
@@ -55,5 +71,5 @@ app.get('/data/:name/:category/:file', function (req, res) {
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
-    console.log(`listening on ${port}`);
+    console.log(`listening on http://localhost:${port}`);
 });
