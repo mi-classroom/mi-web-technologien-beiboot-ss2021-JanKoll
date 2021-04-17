@@ -11,13 +11,26 @@
           <span class="parent-value">{{viewParent.name}}</span>
 
           <div class="image-view-nav-child" >
-            <span class="child-value" v-for="viewChild in viewParent.children" :key="viewChild.name" @click="setImage(viewChild)"
-            >{{viewChild.name}}</span>
+            <span class="child-value" v-for="viewChild in viewParent.children" :key="viewChild.name" @click="setImage(viewChild)">{{viewChild.name}}</span>
           </div>
         </div>
       </div>
       <div class="image-view">
         <img class="image" :src="'http://localhost:3000/' + currentImg.path" :alt="currentImgData.name">
+        <div class="metadata-toggle" @click="metaActive = !metaActive">
+          <span v-if="metaActive">x</span>
+          <span v-else>i</span>
+        </div>
+        <div class="metadata" :class="{ active: metaActive }">
+            <div class="metadata-parent" v-for="meatParantCategory in Object.keys(currentImg.meta)" :key="meatParantCategory">
+              <span class="metadata-parent-title">{{meatParantCategory}}</span>
+              <div class="metadata-category" v-for="meatCategory in Object.keys(currentImg.meta[meatParantCategory])" :key="meatCategory">
+                <span class="metadata-child" v-if="currentImg.meta[meatParantCategory][meatCategory].description !== ''">
+                  <b>{{meatCategory}}</b>: {{currentImg.meta[meatParantCategory][meatCategory].description}}
+                </span>
+              </div>
+            </div>
+        </div>
       </div>
     </div>
   </div>
@@ -32,7 +45,8 @@ export default {
     return {
       data: Object,
       currentImg: undefined,
-      currentImgData: undefined
+      currentImgData: undefined,
+      metaActive: false
     }
   },
   beforeMount () {
@@ -95,7 +109,7 @@ $emerald: #2ecc71;
       position: relative;
       border-bottom: .125rem solid $asphalt;
       height: 4rem;
-
+      z-index: 10;
       .image-view-nav-parent {
         font-weight: bold;
         flex-grow: 1;
@@ -113,6 +127,10 @@ $emerald: #2ecc71;
         }
         &:not(:last-child) {
           border-right: .125rem solid $asphalt;
+        }
+        &:last-child .image-view-nav-child {
+          border-right: none;
+          right: 0;
         }
         &:hover .image-view-nav-child {
           display: block;
@@ -145,9 +163,64 @@ $emerald: #2ecc71;
   .image-view {
     height: 100%;
     display: flex;
+    position: relative;
     justify-content: center;
     .image {
       align-self: center;
+    }
+  }
+  .metadata-toggle {
+    position: absolute;
+    z-index: 2;
+    right: 0;
+    margin: .5rem;
+    height: 3rem;
+    width: 3rem;
+    line-height: 3rem;
+    text-align: center;
+    box-sizing: border-box;
+    // border-radius: 100%;
+    border: 1px solid $clouds;
+    background: rgba(black, .5);
+    font-weight: bold;
+    font-size: 1.5rem;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  .metadata {
+    &.active {
+      display: block;
+    }
+    display: none;
+    margin: .5rem;
+    position: absolute;
+    right: 0;
+    background: rgba(black, .5);
+    padding: 1rem .5rem;
+    max-width: 25rem;
+    .metadata-parent {
+      &:not(:last-child) {
+        margin-bottom: .5rem;
+      }
+      &:not(:first-child) {
+        margin-top: 1rem;
+      }
+      .metadata-parent-title {
+        text-transform: uppercase;
+        font-weight: bold;
+        margin-bottom: .25rem;
+        padding-bottom: .25rem;
+        display: block;
+        border-bottom: 1px solid $asphalt;
+        font-size: 1.25rem;
+      }
+    }
+    .metadata-category {
+      &:not(:last-child) .metadata-child {
+        margin-bottom: .5rem;
+        display: block;
+      }
     }
   }
 }
