@@ -1,12 +1,17 @@
 // Beiboot Server
 
+// .env variabels
+require('dotenv').config();
+const DATA_DIRECTORY = process.env.DATA_DIRECTORY || './data';
+const FILE_PATTERN = process.env.FILE_PATTERN || '\.(jpg|jpeg)$';
+const PORT = process.env.PORT || 3000;
+
 // fs Varuabels
-const dir = './data/';
 const fs = require('fs').promises;
 
 // get directory tree
 const dirTree = require("directory-tree");
-const tree = dirTree(dir);
+const tree = dirTree(DATA_DIRECTORY, {extensions: new RegExp(FILE_PATTERN)});
 
 // init express with cors
 const express = require('express');
@@ -17,10 +22,6 @@ app.use(cors());
 // ExifReader
 const ExifReader = require('exifreader');
 const exifErrors = ExifReader.errors;
-
-
-const filePath = 'data/G_US_HAM_46-1987/01_Overall/G_US_HAM_46-1987_Overall-001.tif.jpg';
-
 
 
 function addMetaToTree(tree) {
@@ -42,16 +43,13 @@ function addMetaToTree(tree) {
     return tree;
 }
 
-addMetaToTree(tree.children)
-
-
 app.get('/', function (req, res) {
     res.send(addMetaToTree(tree.children));
 });
 
 app.get('/data/:name/:category/:file', function (req, res) {
     let options = {
-        root: dir,
+        root: DATA_DIRECTORY,
         dotfiles: 'deny',
         headers: {
             'x-timestamp': Date.now(),
@@ -69,7 +67,6 @@ app.get('/data/:name/:category/:file', function (req, res) {
     })
 });
 
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-    console.log(`listening on http://localhost:${port}`);
+app.listen(PORT, () => {
+    console.log(`listening on http://localhost:${PORT}`);
 });
