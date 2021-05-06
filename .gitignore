@@ -106,3 +106,5 @@ dist
 # RM idea folder
 
 .idea
+
+.DS_Store
