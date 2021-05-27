@@ -14,7 +14,10 @@ git clone https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2021-Jan
 
 cd mi-web-technologien-beiboot-ss2021-JanKoll
 
-docker compose up
+docker-compose up --build -d
 ```
 
-Unter Linux Betriebssystemen ist der Compose-Befehl `docker-compose up`.
+`--build` wird nurbenötigt, wenn Änderungen am Code vorgenommen wurden. Um die Container wieder zu zerstören, muss der Befehl `docker-compose down` ausgeführt werden.
+
+### Environment Variablen
+Die Environment Variablen können für den Client unter `/client/src/env.js` und für den Server unter `/server/.env` angepasst werden.

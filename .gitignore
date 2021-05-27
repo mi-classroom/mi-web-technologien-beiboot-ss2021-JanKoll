@@ -104,7 +104,8 @@ dist
 .tern-port
 
 # RM idea folder
-
-.idea
+.idea 
 
 .DS_Store
+
+data
