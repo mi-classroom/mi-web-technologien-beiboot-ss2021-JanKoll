@@ -23,14 +23,16 @@ app.use(cors());
 const ExifReader = require('exifreader');
 const exifErrors = ExifReader.errors;
 
+// Filter FS
+const find = require('find');
 
-function addMetaToTree(tree) {
+function addMetaToTree(computedTree) {
     async function loadMonoCounter(file) {
         const data = await fs.readFile(file);
         return new Buffer.from(data);
     }
 
-    tree.forEach(dirItem => {
+    computedTree.forEach(dirItem => {
         dirItem.children.forEach(dirParent => {
             dirParent.children.forEach(dirChild => {
                 loadMonoCounter(dirChild.path).then(data => {
@@ -40,7 +42,7 @@ function addMetaToTree(tree) {
         })
     })
 
-    return tree;
+    return computedTree;
 }
 
 app.get('/', function (req, res) {
@@ -64,6 +66,19 @@ app.get('/data/:name/:category/:file', function (req, res) {
         } else {
             console.log('Sent:', fileName)
         }
+    })
+});
+
+app.get('/search/:filter', function (req, res) {
+    find.dir(new RegExp (`(${req.params.filter})(?!.*\\/)`), DATA_DIRECTORY, function(folders) {
+
+        folders.forEach(function (folder, item) {
+            folders[item] = tree.children.filter(elm => elm.path === folder)[0]
+        })
+
+        console.log('Sent filter results of:', req.params.filter)
+
+        res.send(addMetaToTree(folders));
     })
 });
 
