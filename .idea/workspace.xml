@@ -21,9 +21,15 @@
   <component name="ChangeListManager">
     <list default="true" id="9c13e19f-750a-4afc-bf96-a1b209d4f19b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Home.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Home.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Search.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/G_US_HAM_46-1987/01_Overall/G_US_HAM_46-1987_Overall-001.tif.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/G_US_HAM_46-1987/01_Overall/G_US_HAM_46-1987_Overall-002.tif.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/G_US_HAM_46-1987/01_Overall/G_US_HAM_46-1987_Overall.tif.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/G_US_HAM_46-1987/02_Reverse/G_US_HAM_46-1987_Reverse-001.tif.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/G_US_HAM_46-1987/03_IRR/G_US_HAM_46-1987_IRR-001.tif.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/G_US_HAM_46-1987/04_UV/G_US_HAM_46-1987_UV-001.tif.jpg" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,7 +90,7 @@
       <workItem from="1618916718041" duration="845000" />
       <workItem from="1618920429964" duration="656000" />
       <workItem from="1618923039971" duration="2909000" />
-      <workItem from="1622110774806" duration="4948000" />
+      <workItem from="1622110774806" duration="5401000" />
     </task>
     <servers />
   </component>
@@ -108,28 +114,28 @@
       <screen x="1680" y="-815" width="3360" height="1865" />
     </state>
     <state x="3936" y="-77" key="#com.intellij.fileTypes.FileTypeChooser/1680.-815.3360.1865/0.25.1680.1025@1680.-815.3360.1865" timestamp="1618923071388" />
-    <state width="620" height="952" key="GridCell.Tab.0.bottom" timestamp="1622117772812">
+    <state width="620" height="952" key="GridCell.Tab.0.bottom" timestamp="1622125116523">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="620" height="952" key="GridCell.Tab.0.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1622117772812" />
+    <state width="620" height="952" key="GridCell.Tab.0.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1622125116523" />
     <state width="1625" height="769" key="GridCell.Tab.0.bottom/0.25.1680.1025@0.25.1680.1025" timestamp="1619077088223" />
     <state width="1625" height="769" key="GridCell.Tab.0.bottom/1680.-815.3360.1865/0.25.1680.1025@1680.-815.3360.1865" timestamp="1618925744760" />
-    <state width="620" height="952" key="GridCell.Tab.0.center" timestamp="1622117772811">
+    <state width="620" height="952" key="GridCell.Tab.0.center" timestamp="1622125116522">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="620" height="952" key="GridCell.Tab.0.center/0.0.1680.1050@0.0.1680.1050" timestamp="1622117772811" />
+    <state width="620" height="952" key="GridCell.Tab.0.center/0.0.1680.1050@0.0.1680.1050" timestamp="1622125116522" />
     <state width="1625" height="769" key="GridCell.Tab.0.center/0.25.1680.1025@0.25.1680.1025" timestamp="1619077088222" />
     <state width="1625" height="769" key="GridCell.Tab.0.center/1680.-815.3360.1865/0.25.1680.1025@1680.-815.3360.1865" timestamp="1618925744759" />
-    <state width="620" height="952" key="GridCell.Tab.0.left" timestamp="1622117772811">
+    <state width="620" height="952" key="GridCell.Tab.0.left" timestamp="1622125116521">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="620" height="952" key="GridCell.Tab.0.left/0.0.1680.1050@0.0.1680.1050" timestamp="1622117772811" />
+    <state width="620" height="952" key="GridCell.Tab.0.left/0.0.1680.1050@0.0.1680.1050" timestamp="1622125116521" />
     <state width="1625" height="769" key="GridCell.Tab.0.left/0.25.1680.1025@0.25.1680.1025" timestamp="1619077088222" />
     <state width="1625" height="769" key="GridCell.Tab.0.left/1680.-815.3360.1865/0.25.1680.1025@1680.-815.3360.1865" timestamp="1618925744759" />
-    <state width="620" height="952" key="GridCell.Tab.0.right" timestamp="1622117772812">
+    <state width="620" height="952" key="GridCell.Tab.0.right" timestamp="1622125116523">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="620" height="952" key="GridCell.Tab.0.right/0.0.1680.1050@0.0.1680.1050" timestamp="1622117772812" />
+    <state width="620" height="952" key="GridCell.Tab.0.right/0.0.1680.1050@0.0.1680.1050" timestamp="1622125116523" />
     <state width="1625" height="769" key="GridCell.Tab.0.right/0.25.1680.1025@0.25.1680.1025" timestamp="1619077088223" />
     <state width="1625" height="769" key="GridCell.Tab.0.right/1680.-815.3360.1865/0.25.1680.1025@1680.-815.3360.1865" timestamp="1618925744760" />
     <state width="1638" height="363" key="GridCell.Tab.1.bottom" timestamp="1622116723121">
