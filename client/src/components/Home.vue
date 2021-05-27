@@ -37,6 +37,7 @@
 </template>
 
 <script>
+import { env } from '../env'
 export default {
   name: 'Home',
   props: {
@@ -58,7 +59,7 @@ export default {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*'
       }
-      fetch('http://localhost:3000', {
+      fetch(env.baseUrl, {
         headers,
         mode: 'cors'
       })
