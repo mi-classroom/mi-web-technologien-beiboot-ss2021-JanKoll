@@ -1,7 +1,7 @@
 <template>
   <main>
     <div class="search">
-      <input type="text" placeholder="Serach" v-model="search" v-on:keyup.enter="getSearch(search)" />
+      <input type="text" placeholder="Search" v-model="search" v-on:keyup.enter="getSearch(search)" />
       <button class="search-btn" @click="getSearch(search)">
         <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs></defs><path class="cls-1" d="M60.3,0A39.7,39.7,0,0,0,28.9,64L1.47,91.42a5,5,0,0,0,7.11,7.11L36,71.1A39.7,39.7,0,1,0,60.3,0Zm0,69.35A29.65,29.65,0,1,1,90,39.7,29.68,29.68,0,0,1,60.3,69.35Z"/></svg>
       </button>
@@ -13,7 +13,7 @@
           {{ image.name }}
         </li>
       </ul>
-      <div class="image-preview" v-if="currentImgData">
+      <div class="image-preview"  v-if="currentImg != undefined">
         <div class="image-view-nav">
           <div class="image-view-nav-parent" v-for="viewParent in currentImgData.children" :key="viewParent.name">
             <span class="parent-value">{{viewParent.name}}</span>
@@ -24,20 +24,20 @@
           </div>
         </div>
         <div class="image-view">
-          <img class="image" :src="baseUrl + currentImg.path.replace('..', '')" :alt="currentImgData.name">
+          <img class="image" v-if="currentImg.path" :src="baseUrl + currentImg.path.replace('..', '')" :alt="currentImgData.name">
           <div class="metadata-toggle" @click="metaActive = !metaActive">
             <span v-if="metaActive">x</span>
             <span v-else>i</span>
           </div>
-          <div class="metadata" :class="{ active: metaActive }">
-              <div class="metadata-parent" v-for="meatParantCategory in Object.keys(currentImg.meta)" :key="meatParantCategory">
-                <span class="metadata-parent-title">{{meatParantCategory}}</span>
-                <div class="metadata-category" v-for="meatCategory in Object.keys(currentImg.meta[meatParantCategory])" :key="meatCategory">
-                  <span class="metadata-child" v-if="currentImg.meta[meatParantCategory][meatCategory].description !== ''">
-                    <b>{{meatCategory}}</b>: {{currentImg.meta[meatParantCategory][meatCategory].description}}
-                  </span>
-                </div>
+          <div class="metadata" v-if="currentImg.meta" :class="{ active: metaActive }">
+            <div class="metadata-parent" v-for="meatParantCategory in Object.keys(currentImg.meta)" :key="meatParantCategory">
+              <span class="metadata-parent-title">{{meatParantCategory}}</span>
+              <div class="metadata-category" v-for="meatCategory in Object.keys(currentImg.meta[meatParantCategory])" :key="meatCategory">
+                <span class="metadata-child" v-if="currentImg.meta[meatParantCategory][meatCategory].description !== ''">
+                  <b>{{meatCategory}}</b>: {{currentImg.meta[meatParantCategory][meatCategory].description}}
+                </span>
               </div>
+            </div>
           </div>
         </div>
       </div>
@@ -57,7 +57,8 @@ export default {
       currentImg: undefined,
       currentImgData: undefined,
       metaActive: false,
-      baseUrl: env.baseUrl
+      baseUrl: env.baseUrl,
+      search: ''
     }
   },
   beforeMount () {
@@ -74,10 +75,13 @@ export default {
         mode: 'cors'
       })
         .then(response => response.json())
-        .then(data => (this.data = data))
+        .then(data => {
+          this.data = data
+          // Set Img on startup
+          // this.getImage(data[0].name)
+        })
     },
     async getSearch (parameter) {
-      console.log(parameter)
       if (parameter === undefined || parameter === '') {
         this.getData()
       } else {
@@ -93,7 +97,7 @@ export default {
           .then(data => (this.data = data))
       }
     },
-    getImage (image) {
+    async getImage (image) {
       const item = this.data.filter(function (elem) { if (elem.name === image) return elem })[0]
       this.currentImgData = item
       this.currentImg = item.children[0].children[0]

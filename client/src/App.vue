@@ -4,7 +4,6 @@
 
 <script>
 import Home from './components/Home.vue'
-// import Search from './components/Search.vue'
 
 export default {
   name: 'App',

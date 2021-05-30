@@ -32,6 +32,10 @@ function addMetaToTree(computedTree) {
         return new Buffer.from(data);
     }
 
+    computedTree = computedTree.filter(function( element ) {
+        return element !== undefined;
+    });
+
     computedTree.forEach(dirItem => {
         dirItem.children.forEach(dirParent => {
             dirParent.children.forEach(dirChild => {
