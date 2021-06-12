@@ -19,7 +19,9 @@
             <span class="parent-value">{{viewParent.name}}</span>
 
             <div class="image-view-nav-child" >
-              <span class="child-value" v-for="viewChild in viewParent.children" :key="viewChild.name" @click="setImage(viewChild)">{{viewChild.name}}</span>
+              <span class="child-value" v-for="viewChild in viewParent.children" :key="viewChild.name" @click="setImage(viewChild)">
+                <span v-if="viewChild.type === 'file'">{{viewChild.name}}</span>
+              </span>
             </div>
           </div>
         </div>
@@ -205,8 +207,9 @@ $emerald: #2ecc71;
           border: .125rem solid $asphalt;
           display: none;
           position: absolute;
-          left: -.125rem;
-          right: -.125rem;
+          // left: -.125rem;
+          // right: -.125rem;
+          margin-left: -.125rem;
           font-size: 1rem;
           line-height: 1.5;
           height: unset;
@@ -227,12 +230,14 @@ $emerald: #2ecc71;
     }
   }
   .image-view {
-    height: 100%;
+    // height: 100%;
     display: flex;
     position: relative;
     justify-content: center;
+    padding: .5rem;
     .image {
       align-self: center;
+      max-width: 100%;
     }
   }
   .metadata-toggle {

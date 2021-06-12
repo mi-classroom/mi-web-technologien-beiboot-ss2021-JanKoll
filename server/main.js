@@ -2,12 +2,14 @@
 
 // .env variabels
 require('dotenv').config();
-const DATA_DIRECTORY = process.env.DATA_DIRECTORY || './data';
+const DATA_DIRECTORY = process.env.DATA_DIRECTORY || '../data';
 const FILE_PATTERN = process.env.FILE_PATTERN || '\.(jpg|jpeg)$';
 const PORT = process.env.PORT || 3000;
 
-// fs Varuabels
-const fs = require('fs').promises;
+// fs variabels
+const fs = require('fs');
+const fsPromises = fs.promises;
+// fs.createReadStream( DATA_DIRECTORY );
 
 // get directory tree
 const dirTree = require("directory-tree");
@@ -28,7 +30,7 @@ const find = require('find');
 
 function addMetaToTree(computedTree) {
     async function loadMonoCounter(file) {
-        const data = await fs.readFile(file);
+        const data = await fsPromises.readFile(file);
         return new Buffer.from(data);
     }
 
@@ -37,13 +39,22 @@ function addMetaToTree(computedTree) {
     });
 
     computedTree.forEach(dirItem => {
-        dirItem.children.forEach(dirParent => {
-            dirParent.children.forEach(dirChild => {
-                loadMonoCounter(dirChild.path).then(data => {
-                    dirChild.meta = ExifReader.load(data, {expanded: true})
+        function scanDir(dir) {
+            dir.children.forEach(dirParent => {
+                dirParent.children.forEach(dirChild => {
+                    if (dirChild.type === 'file') {
+                        loadMonoCounter(dirChild.path).then(data => {
+                            dirChild.meta = ExifReader.load(data, {expanded: true})
+                        })
+                    }
+                    // Disable inner Folders
+                    // else {
+                    //     scanDir(dirChild)
+                    // }
                 })
             })
-        })
+        }
+        scanDir(dirItem)
     })
 
     return computedTree;
@@ -66,7 +77,7 @@ app.get('/data/:name/:category/:file', function (req, res) {
     let fileName = req.params.name + '/' + req.params.category + '/' + req.params.file
     res.sendFile(fileName, options, function (err) {
         if (err) {
-            next(err)
+            console.log(err)
         } else {
             console.log('Sent:', fileName)
         }
